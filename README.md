@@ -12,7 +12,11 @@ Nesse sentido, a proposta do sistema apresentado nesse documento é oferecer um 
 
 ```
 Usuário
-Cartão
+Cartão de Passe
+UF
+Cidade
+Empresa
+Linha
 ```
 
 ## Processos de Negócio
