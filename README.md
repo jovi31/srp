@@ -12,7 +12,9 @@ Nesse sentido, a proposta do sistema apresentado nesse documento é oferecer um 
 
 ```
 Usuário
-Cartão de Passe
+Cartão inteligente
+Conta
+Método de Pagamento
 UF
 Cidade
 Empresa
@@ -23,10 +25,14 @@ Linha
 
 ```
 Recarga
+Agendamento
+Saque
 ```
 
 ## Relatórios
 
 ```
-Recargas p/ mês
+Quantidade de recargas por mês
+Média dos valores recarregados
+Total das recargas por empresa
 ```
