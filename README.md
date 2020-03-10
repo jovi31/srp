@@ -33,7 +33,7 @@ Saque
 
 ```
 Quantidade de recargas por mês
-Média dos valores recarregados
+Média dos valores recarregados por empresa
 Total das recargas por empresa
 Número de empresas por estado
 Número total de usuários por empresa
