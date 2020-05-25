@@ -18,7 +18,6 @@ Método de Pagamento
 UF
 Cidade
 Empresa
-Linha
 ```
 
 ## Processos de Negócio
