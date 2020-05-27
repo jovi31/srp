@@ -11,7 +11,7 @@ Nesse sentido, a proposta do sistema apresentado nesse documento é oferecer um 
 ## Manutenção de Cadastros
 
 ```
-Usuário
+Usuário (Cliente ou Administrador)
 Cartão inteligente
 Conta
 Método de Pagamento
@@ -31,9 +31,9 @@ Saque
 ## Relatórios
 
 ```
-Quantidade de recargas por mês
-Média dos valores recarregados por empresa
-Total das recargas por empresa
-Número de empresas por estado
-Número total de usuários por empresa
+Listar totais e quantidades de recargas nas Empresas (data início e data término)
+Listar totais e quantidades de recargas nas Cidades (Por UF, data início e data término)
+Listar recargas (Por cliente, data início e data término)
+Listar saques (Por cliente, data início e data término)
+Listar quantidades de Clientes (Por empresa)
 ```
