@@ -66,6 +66,7 @@ public class _DBService {
 		Empresa empresa1 = new Empresa(null, "Empresa01", "11111111111111", Arrays.asList(cidade1));
 		Empresa empresa2 = new Empresa(null, "Empresa02", "22222222222222", Arrays.asList(cidade2));
 		Empresa empresa3 = new Empresa(null, "Empresa03", "33333333333333", Arrays.asList(cidade1, cidade2));
+		Empresa empresa4 = new Empresa(null, "Empresa04", "44444444444444", Arrays.asList(cidade1, cidade2));
 		
 		Usuario administrador = new Usuario(null, "Admin", "11111111111", "11", 
 				"111111111", "admin@mail.com", "admin012", true);
@@ -79,10 +80,10 @@ public class _DBService {
 		CartaoInteligente cartaoInteligente1 = new CartaoInteligente(pk1, "Cartão01", (float) 25, cliente1);
 		
 		CartaoInteligentePK pk2 = new CartaoInteligentePK("00000000002", empresa1);
-		CartaoInteligente cartaoInteligente2 = new CartaoInteligente(pk2, "Cartão02", (float) 20, cliente2);
+		CartaoInteligente cartaoInteligente2 = new CartaoInteligente(pk2, "Cartão01", (float) 20, cliente2);
 		
 		CartaoInteligentePK pk3 = new CartaoInteligentePK("00000000001", empresa2);
-		CartaoInteligente cartaoInteligente3 = new CartaoInteligente(pk3, "Cartão03", (float) 0, cliente2);
+		CartaoInteligente cartaoInteligente3 = new CartaoInteligente(pk3, "Cartão02", (float) 0, cliente2);
 		
 		Conta conta1 = new Conta(null, "Usuario01", "22222222222", "001", "0001", 
 				"123456789", TipoConta.CORRENTE, cliente1);
@@ -110,7 +111,7 @@ public class _DBService {
 		
 		ufRepository.saveAll(Arrays.asList(uf1, uf2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2));
-		empresaRepository.saveAll(Arrays.asList(empresa1, empresa2, empresa3));
+		empresaRepository.saveAll(Arrays.asList(empresa1, empresa2, empresa3, empresa4));
 		usuarioRepository.saveAll(Arrays.asList(administrador, cliente1, cliente2));
 		cartaoInteligenteRepository.saveAll(Arrays.asList(cartaoInteligente1, cartaoInteligente2, cartaoInteligente3));
 		contaRepository.save(conta1);

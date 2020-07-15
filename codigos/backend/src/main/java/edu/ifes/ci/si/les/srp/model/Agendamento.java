@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -47,7 +46,7 @@ public class Agendamento implements Serializable {
 
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@FutureOrPresent
+	// @FutureOrPresent
 	private Date dataInicio;
 
 	@Min(value = 1)

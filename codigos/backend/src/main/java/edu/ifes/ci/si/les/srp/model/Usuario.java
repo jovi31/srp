@@ -52,6 +52,7 @@ public class Usuario implements Serializable {
 	@Size(min = 8, max = 9, message = "O número de telefone deve ter entre 8 e 9 dígitos")
 	private String telefone;
 
+	@Column(unique = true)
 	@NotBlank(message = "Endereço de email não informado")
 	@Size(min = 7, message = "O endereço de email deve possuir no mínimo 7 caracteres")
 	private String email;
@@ -62,7 +63,7 @@ public class Usuario implements Serializable {
 	@Size(min = 8, max = 20, message = "A senha deve possuir entre 8 e 20 caracteres")
 	private String senha;
 	
-	@NotNull
+	@NotNull(message = "Nível do usuário não informado")
 	private Boolean admin;
 
 }

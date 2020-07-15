@@ -39,6 +39,6 @@ public class Cidade implements Serializable {
 	@NotNull(message = "UF da cidade não informada")
 	@ManyToOne
 	@JoinColumn(name = "uf_sigla")
-	private UF uF;
+	private UF uf;
 
 }

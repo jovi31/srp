@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -28,7 +29,9 @@ public class CartaoInteligente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Valid
 	@EmbeddedId
+	@NotNull(message = "ID do cartão não informado")
 	private CartaoInteligentePK id;
 
 	@Column(length = 30)
