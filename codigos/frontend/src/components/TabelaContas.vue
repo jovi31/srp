@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'ListaContas',
+  name: 'TabelaContas',
   data () {
     return {
       selected: [],

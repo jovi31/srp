@@ -7,7 +7,7 @@
           title="Selecionar cartão de passe"
           :done="step > 1"
         >
-          <ListaCartoes @confirmar="registrarCartaoPasse" />
+          <TabelaCartoes @confirmar="registrarCartaoPasse" />
         </q-step>
 
         <q-step
@@ -15,7 +15,7 @@
           title="Selecionar conta"
           :done="step > 2"
         >
-          <ListaContas @confirmar="registrarConta" />
+          <TabelaContas @confirmar="registrarConta" />
         </q-step>
 
         <q-step
@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import ListaCartoes from '../../components/ListaCartoes'
-import ListaContas from '../../components/ListaContas'
+import TabelaCartoes from '../../components/TabelaCartoes'
+import TabelaContas from '../../components/TabelaContas'
 import Valor from '../../components/Valor'
 
 export default {
   name: 'Saque',
-  components: { ListaCartoes, ListaContas, Valor },
+  components: { TabelaCartoes, TabelaContas, Valor },
   data () {
     return {
       step: 1,

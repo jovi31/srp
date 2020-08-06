@@ -85,12 +85,34 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.$emit('submit', {
+      const numeroArr = this.numero.split(' ')
+      const numero = numeroArr.join('')
+
+      let mesExp = (this.meses.indexOf(this.mesExp) + 1).toString()
+      if (mesExp.length === 1) mesExp = '0' + mesExp
+
+      const cartao = {
         titular: this.titular,
-        numero: this.numero,
-        mesExp: this.mesExp,
+        numero,
+        mesExp: mesExp,
         anoExp: this.anoExp,
         cvv: this.cvv
+      }
+
+      if (this.numero) {
+        // Verifica se o cartão é Visa ou Mastercard
+        switch (this.numero[0]) {
+          case '4':
+            cartao.bandeira = 0
+            break
+          case '5':
+            cartao.bandeira = 1
+            break
+        }
+      }
+
+      this.$emit('submit', {
+        ...cartao
       })
     },
     onReset () {

@@ -7,7 +7,7 @@
           title="Selecionar cartão de passe"
           :done="step > 1"
         >
-          <ListaCartoes @confirmar="registrarCartaoPasse" />
+          <TabelaCartoes @confirmar="registrarCartaoPasse" />
         </q-step>
 
         <q-step :name="2" title="Inserir dados do cartão de crédito" :done="step > 2">
@@ -15,7 +15,7 @@
         </q-step>
 
         <q-step :name="3" title="Escolher valor" :done="step > 3">
-          <Valor @confirmar="realizarRecarga" />
+          <Valor @confirmar="registrarValor" />
         </q-step>
 
         <template v-slot:navigation>
@@ -41,13 +41,16 @@
 </template>
 
 <script>
-import ListaCartoes from '../../components/ListaCartoes'
+import TabelaCartoes from '../../components/TabelaCartoes'
 import CartaoCreditoForm from '../../components/CartaoCreditoForm'
 import Valor from '../../components/Valor'
 
+import service from '../../services/recarga'
+import { showError, showSuccess } from '../../global'
+
 export default {
   name: 'Recarga',
-  components: { ListaCartoes, CartaoCreditoForm, Valor },
+  components: { TabelaCartoes, CartaoCreditoForm, Valor },
   data () {
     return {
       step: 1,
@@ -65,9 +68,23 @@ export default {
       this.cartaoPasse = dados
       this.$refs.stepper.next()
     },
-    realizarRecarga (dados) {
+    registrarValor (dados) {
       this.valor = dados.valor
-      this.$router.push({ path: '/' })
+      this.realizarRecarga()
+    },
+    realizarRecarga () {
+      const recarga = {
+        valor: this.valor,
+        cartaoInteligente: this.cartaoPasse,
+        cartaoCredito: this.cartaoCredito
+      }
+
+      service.insert(recarga)
+        .then(res => {
+          showSuccess('Recarga realizada com sucesso!')
+        })
+        .catch(showError)
+        .finally(() => this.$router.push({ path: '/' }))
     }
   }
 }

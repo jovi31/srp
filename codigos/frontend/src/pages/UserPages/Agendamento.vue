@@ -3,7 +3,7 @@
     <div class="row">
       <q-stepper class="col-8 offset-2" v-model="step" ref="stepper" color="primary" flat bordered>
         <q-step :name="1" title="Selecionar cartão de passe" :done="step > 1">
-          <ListaCartoes @confirmar="registrarCartaoPasse" />
+          <TabelaCartoes @confirmar="registrarCartaoPasse" />
         </q-step>
 
         <q-step :name="2" title="Inserir dados do cartão de crédito" :done="step > 2">
@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import ListaCartoes from '../../components/ListaCartoes'
+import TabelaCartoes from '../../components/TabelaCartoes'
 import CartaoCreditoForm from '../../components/CartaoCreditoForm'
 import AgendamentoForm from '../../components/AgendamentoForm'
 import Valor from '../../components/Valor'
 
 export default {
   name: 'Agendamento',
-  components: { ListaCartoes, CartaoCreditoForm, AgendamentoForm, Valor },
+  components: { TabelaCartoes, CartaoCreditoForm, AgendamentoForm, Valor },
   data () {
     return {
       step: 1,
