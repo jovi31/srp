@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     loadRecargas () {
-      service.findByCliente(this.cliente)
+      service.findByCliente(this.cliente.id)
         .then(res => {
           this.recargas = res.data
         })

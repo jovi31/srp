@@ -1,15 +1,15 @@
 import Http from './http'
+import Service from './service'
 
-export const insert = recarga => Http.post('/recargas', recarga)
+const config = {
+  baseUri: '/recargas',
+  idAttributes: [
+    'numero',
+    'empresa.id'
+  ]
+}
 
-export const update = recarga => Http.put(`/recargas/${recarga.id}`, recarga)
+const recargaService = Service(config)
+recargaService.findByCliente = clienteId => Http.get(`/recargas/findByCliente/${clienteId}`)
 
-export const find = id => Http.get(`/recargas/${id}`)
-
-export const findByCliente = cliente => Http.get(`/recargas/findByCliente/${cliente.id}`)
-
-export const findAll = () => Http.get('/recargas')
-
-export const remove = id => Http.delete(`/recargas/${id}`)
-
-export default { insert, update, find, findByCliente, findAll, remove }
+export default recargaService

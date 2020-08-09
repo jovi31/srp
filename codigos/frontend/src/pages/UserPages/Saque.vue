@@ -23,7 +23,7 @@
           title="Escolher valor"
           :done="step > 3"
         >
-          <Valor @confirmar="realizarSaque" />
+          <Valor @confirmar="registrarValor" />
         </q-step>
 
         <template v-slot:navigation>
@@ -48,6 +48,9 @@ import TabelaCartoes from '../../components/TabelaCartoes'
 import TabelaContas from '../../components/TabelaContas'
 import Valor from '../../components/Valor'
 
+import service from '../../services/saque'
+import { showError, showSuccess } from '../../global'
+
 export default {
   name: 'Saque',
   components: { TabelaCartoes, TabelaContas, Valor },
@@ -68,9 +71,23 @@ export default {
       this.conta = dados
       this.$refs.stepper.next()
     },
-    realizarSaque (dados) {
+    registrarValor (dados) {
       this.valor = dados.valor
-      this.$router.push({ path: '/' })
+      this.realizarSaque()
+    },
+    realizarSaque () {
+      const saque = {
+        valor: this.valor,
+        cartaoInteligente: this.cartaoPasse,
+        conta: this.conta
+      }
+
+      service.insert(saque)
+        .then(res => {
+          showSuccess('Saque realizado com sucesso!')
+        })
+        .catch(showError)
+        .finally(() => this.$router.push({ path: '/' }))
     }
   }
 }

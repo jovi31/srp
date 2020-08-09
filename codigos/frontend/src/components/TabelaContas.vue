@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-table
       title="Contas"
-      :data="data"
+      :data="contas"
       :columns="columns"
       row-key="id"
       selection="single"
@@ -19,36 +19,43 @@
 </template>
 
 <script>
+import service from '../services/conta'
+import { showError } from '../global'
+
 export default {
   name: 'TabelaContas',
   data () {
     return {
+      cliente: null,
       selected: [],
       columns: [
         { name: 'banco', label: 'Banco', field: 'banco', sortable: true },
         { name: 'agencia', label: 'Agência', field: 'agencia', sortable: true },
         { name: 'conta', label: 'Número da conta', field: 'conta', sortable: true },
-        { name: 'tipoConta', label: 'Tipo da conta', field: 'tipoConta', sortable: true }
+        { name: 'tipo', label: 'Tipo da conta', field: 'tipo', sortable: true }
       ],
-      data: [
-        {
-          id: 0,
-          banco: '001',
-          agencia: '0001',
-          conta: '123456789',
-          tipoConta: 'corrente'
-        }
-      ]
+      contas: []
     }
   },
   methods: {
     confirmar () {
       if (this.selected.length > 0) {
         this.$emit('confirmar', {
-          ...this.selected
+          ...this.selected[0]
         })
       }
+    },
+    loadContas () {
+      service.findByCliente(this.cliente)
+        .then(res => {
+          this.contas = res.data
+        })
+        .catch(showError)
     }
+  },
+  mounted () {
+    this.cliente = { id: 2 }
+    this.loadContas()
   }
 }
 </script>
