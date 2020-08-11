@@ -15,7 +15,7 @@
         </q-step>
 
         <q-step :name="4" title="Escolher valor" :done="step > 3">
-          <Valor @confirmar="realizarAgendamento" />
+          <Valor @confirmar="registrarValor" />
         </q-step>
 
         <template v-slot:navigation>
@@ -40,6 +40,9 @@ import TabelaCartoes from '../../components/TabelaCartoes'
 import CartaoCreditoForm from '../../components/CartaoCreditoForm'
 import AgendamentoForm from '../../components/AgendamentoForm'
 import Valor from '../../components/Valor'
+
+import service from '../../services/agendamento'
+import { showError, showSuccess } from '../../global'
 
 export default {
   name: 'Agendamento',
@@ -66,9 +69,24 @@ export default {
       this.dadosAgendamento = dados
       this.$refs.stepper.next()
     },
-    realizarAgendamento (dados) {
+    registrarValor (dados) {
       this.valor = dados.valor
-      this.$router.push({ path: '/' })
+      this.realizarAgendamento()
+    },
+    realizarAgendamento () {
+      const agendamento = {
+        valor: this.valor,
+        ...this.dadosAgendamento,
+        cartaoInteligente: this.cartaoPasse,
+        cartaoCredito: this.cartaoCredito
+      }
+
+      service.insert(agendamento)
+        .then(res => {
+          showSuccess('Agendamento realizado com sucesso!')
+        })
+        .catch(showError)
+        .finally(() => this.$router.push({ path: '/' }))
     }
   }
 }

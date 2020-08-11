@@ -19,7 +19,11 @@
           outlined
           v-model="tipoPeriodo"
           :options="tipoPeriodoOptions"
+          emit-value
+          map-options
           label="Tipo do periodo"
+          lazy-rules
+          :rules="[ val => (val != null) || 'Campo obrigatório' ]"
         />
       </div>
 
@@ -52,16 +56,19 @@ export default {
     return {
       dataInicio: '',
       periodo: null,
-      tipoPeriodo: '',
+      tipoPeriodo: null,
       tipoPeriodoOptions: [
-        'Mensal', 'Semanal'
+        { label: 'Mensal', value: 0 },
+        { label: 'Semanal', value: 1 }
       ]
     }
   },
   methods: {
     onSubmit () {
+      const formatedDate = this.dataInicio.replaceAll('/', '-')
+
       this.$emit('submit', {
-        dataInicio: this.dataInicio,
+        dataInicio: formatedDate,
         periodo: this.periodo,
         tipoPeriodo: this.tipoPeriodo
       })
@@ -69,7 +76,7 @@ export default {
     onReset () {
       this.dataInicio = ''
       this.periodo = null
-      this.tipoPeriodo = ''
+      this.tipoPeriodo = null
     }
   }
 }
