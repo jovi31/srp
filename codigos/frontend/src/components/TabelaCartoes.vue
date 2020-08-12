@@ -60,7 +60,7 @@ export default {
       }
     },
     loadCartoes () {
-      service.findByCliente(this.cliente)
+      service.findByCliente(this.cliente.id)
         .then(res => {
           this.cartoes = res.data
           this.cartoes.forEach((cartao, index) => {

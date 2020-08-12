@@ -77,11 +77,17 @@ export default {
     }
   },
   methods: {
+    insertOrUpdate () {
+      if (this.update) {
+        return cartaoService.update(this.cartao.id, this.cartao)
+      } else {
+        return cartaoService.insert(this.cartao)
+      }
+    },
     save () {
-      const saveCartao = this.update ? cartaoService.update : cartaoService.insert
       const msg = this.update ? 'alterado' : 'inserido'
 
-      saveCartao(this.cartao)
+      this.insertOrUpdate()
         .then(res => {
           showSuccess(`Cartão Inteligente ${msg} com sucesso!`)
         })

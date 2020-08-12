@@ -2,11 +2,7 @@ import Http from './http'
 import Service from './service'
 
 const config = {
-  baseUri: '/recargas',
-  idAttributes: [
-    'numero',
-    'empresa.id'
-  ]
+  baseUri: '/recargas'
 }
 
 const recargaService = Service(config)

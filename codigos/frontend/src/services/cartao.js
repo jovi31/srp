@@ -1,15 +1,15 @@
 import Http from './http'
+import Service from './service'
 
-export const insert = cartao => Http.post('/cartoes', cartao)
+const config = {
+  baseUri: '/cartoes',
+  idAttributes: [
+    'empresa.id',
+    'numero'
+  ]
+}
 
-export const update = cartao => Http.put(`/cartoes/${cartao.id.empresa.id}/${cartao.id.numero}`, cartao)
+const cartaoService = Service(config)
+cartaoService.findByCliente = clienteId => Http.get(`/cartoes/findByCliente/${clienteId}`)
 
-export const find = id => Http.get(`/cartoes/${id.empresa.id}/${id.numero}`)
-
-export const findByCliente = cliente => Http.get(`/cartoes/findByCliente/${cliente.id}`)
-
-export const findAll = () => Http.get('/cartoes')
-
-export const remove = id => Http.delete(`/cartoes/${id.empresa.id}/${id.numero}`)
-
-export default { insert, update, find, findByCliente, findAll, remove }
+export default cartaoService
