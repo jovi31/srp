@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -38,18 +39,16 @@ public class Recarga implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 
 	@Enumerated(EnumType.ORDINAL)
-	@NotNull
 	private Status status;
 
 	@Min(value = 1, message = "O valor da recarga deve ser maior que 0")
 	@Max(value = 200, message = "O valor da recarga não pode ultrapassar R$ 200,00")
 	@NotNull(message = "O valor da recarga deve ser preenchido")
-	@Digits(integer = 3, fraction = 2, message = "O valor da recarga deve ser preenchido com dígitos")
+	@Digits(integer = 3, fraction = 2, message = "Valor inválido")
 	private Float valor;
 
 	@ManyToOne
@@ -61,8 +60,9 @@ public class Recarga implements Serializable {
 	@NotNull(message = "Cartão inteligente não informado")
 	private CartaoInteligente cartaoInteligente;
 
+	@Valid
 	@Embedded
-	@NotNull
+	@NotNull(message = "Cartão de crédito não informado")
 	private CartaoCredito cartaoCredito;
 
 }

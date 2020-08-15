@@ -9,6 +9,8 @@ import edu.ifes.ci.si.les.srp.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	
+	public Usuario findByEmail(String email);
+	
 	@Transactional(readOnly = true)
 	public boolean existsByEmail(String email);
 	

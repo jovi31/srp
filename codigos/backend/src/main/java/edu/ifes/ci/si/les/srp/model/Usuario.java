@@ -58,9 +58,9 @@ public class Usuario implements Serializable {
 	private String email;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@Column(length = 20)
+	// @Column(length = 20)
 	@NotBlank(message = "Senha não informada")
-	@Size(min = 8, max = 20, message = "A senha deve possuir entre 8 e 20 caracteres")
+	// @Size(min = 8, max = 20, message = "A senha deve possuir entre 8 e 20 caracteres")
 	private String senha;
 	
 	@NotNull(message = "Nível do usuário não informado")

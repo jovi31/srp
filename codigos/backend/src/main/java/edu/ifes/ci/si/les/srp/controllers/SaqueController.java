@@ -16,90 +16,69 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifes.ci.si.les.srp.config.CustomUser;
-import edu.ifes.ci.si.les.srp.model.Conta;
-import edu.ifes.ci.si.les.srp.model.Usuario;
-import edu.ifes.ci.si.les.srp.services.ContaService;
+import edu.ifes.ci.si.les.srp.model.Saque;
+import edu.ifes.ci.si.les.srp.services.SaqueService;
 import edu.ifes.ci.si.les.srp.services.exceptions.BusinessRuleException;
 import edu.ifes.ci.si.les.srp.services.exceptions.ConstraintException;
 import edu.ifes.ci.si.les.srp.utils.CustomAuthorityUtils;
 
 @RestController
-@RequestMapping(value = "/contas")
-public class ContaController {
+@RequestMapping(value = "/saques")
+public class SaqueController {
 	
 	@Autowired
-	private ContaService service;
+	private SaqueService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<List<Conta>> findAll() {
-		List<Conta> list = service.findAll();
+	public ResponseEntity<List<Saque>> findAll() {
+		List<Saque> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<Conta> find(@PathVariable Integer id) {
-		Conta obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<Saque> find(@PathVariable Integer id) {
+		Saque saque = service.findById(id);
+		return ResponseEntity.ok().body(saque);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Conta> insert(@Valid @RequestBody Conta obj, BindingResult br,
+	public ResponseEntity<Saque> insert(@Valid @RequestBody Saque obj, BindingResult br,
 			@AuthenticationPrincipal CustomUser userDetails) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-		Integer contaUserId = obj.getCliente().getId();
 		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (contaUserId != userDetails.getId())
-				throw new BusinessRuleException("A conta deve pertencer ao usuário.");
-		}
-		obj = service.insert(obj);
+		obj = service.insert(obj, userDetails.getId(), isAdmin);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Conta> update(@Valid @RequestBody Conta obj, BindingResult br,
-			@AuthenticationPrincipal CustomUser userDetails) {
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<Saque> update(@Valid @RequestBody Saque obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-		Integer contaUserId = obj.getCliente().getId();
-		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (contaUserId != userDetails.getId())
-				throw new BusinessRuleException("A conta deve pertencer ao usuário.");
-		}
 		obj = service.update(obj);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @AuthenticationPrincipal CustomUser userDetails) {
-		Conta conta = service.findById(id);
-		Integer contaUserId = conta.getCliente().getId();
-		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (contaUserId != userDetails.getId())
-				throw new BusinessRuleException("A conta deve pertencer ao usuário.");
-		}
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value = "/findByCliente/{idCliente}", method = RequestMethod.GET)
-	public ResponseEntity<List<Conta>> findByCliente(@PathVariable Integer idCliente,
+	@RequestMapping(value = "/findByCliente/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Saque>> findByCliente(@PathVariable Integer id,
 			@AuthenticationPrincipal CustomUser userDetails) {
 		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
 		if (!isAdmin) {
-			if (idCliente != userDetails.getId())
+			if (id != userDetails.getId())
 				throw new BusinessRuleException("Esse recurso não pode ser acessado.");
 		}
-
-		Usuario cliente = new Usuario();
-		cliente.setId(idCliente);
-		List<Conta> list = service.findByCliente(cliente);
+		List<Saque> list = service.findByCliente(id);
 		return ResponseEntity.ok().body(list);
 	}
-
+	
 }

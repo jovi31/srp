@@ -37,12 +37,10 @@ public class Saque implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 
 	@Enumerated(EnumType.ORDINAL)
-	@NotNull
 	private Status status;
 
 	@Min(value = 1, message = "O valor do saque deve ser maior que 0")

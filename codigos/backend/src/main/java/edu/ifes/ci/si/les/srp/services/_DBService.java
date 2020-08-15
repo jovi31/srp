@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.ifes.ci.si.les.srp.model.Agendamento;
@@ -56,6 +57,7 @@ public class _DBService {
 	public void instantiateTestDatabase() throws ParseException {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		
 		UF uf1 = new UF("ES", "Espírito Santo");
 		UF uf2 = new UF("RJ", "Rio de Janeiro");
@@ -69,12 +71,11 @@ public class _DBService {
 		Empresa empresa4 = new Empresa(null, "Empresa04", "44444444444444", Arrays.asList(cidade1, cidade2));
 		
 		Usuario administrador = new Usuario(null, "Admin", "11111111111", "11", 
-				"111111111", "admin@mail.com", "admin012", true);
-		
+				"111111111", "admin@mail.com", passwordEncoder.encode("admin012"), true);
 		Usuario cliente1 = new Usuario(null, "Usuario01", "22222222222", "22", 
-				"222222222", "usuario01@mail.com", "01234567", false);
+				"222222222", "usuario01@mail.com", passwordEncoder.encode("01234567"), false);
 		Usuario cliente2 = new Usuario(null, "Usuario02", "33333333333", "33", 
-				"333333333", "usuario02@mail.com", "12345678", false);
+				"333333333", "usuario02@mail.com", passwordEncoder.encode("12345678"), false);
 		
 		CartaoInteligentePK pk1 = new CartaoInteligentePK("00000000001", empresa1);
 		CartaoInteligente cartaoInteligente1 = new CartaoInteligente(pk1, "Cartão01", (float) 25, cliente1);

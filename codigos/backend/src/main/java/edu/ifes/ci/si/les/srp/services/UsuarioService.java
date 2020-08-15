@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.ifes.ci.si.les.srp.model.Usuario;
@@ -18,6 +19,8 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository repository;
+	
+	private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	public Usuario findById(Integer id) {
 		try {
@@ -38,6 +41,12 @@ public class UsuarioService {
 			throw new ConstraintException("Já existe um usuário cadastrado com esse E-mail");
 		
 		obj.setId(null);
+		
+		String senha = obj.getSenha();
+		senha = encoder.encode(senha);
+		
+		obj.setSenha(senha);
+		
 		try {
 			return repository.save(obj);
 		} catch (DataIntegrityViolationException e) {
@@ -71,4 +80,11 @@ public class UsuarioService {
 		}
 	}
 	
+	public Usuario findByEmail(String email) {
+		try {
+			return repository.findByEmail(email);
+		} catch (NoSuchElementException e) {
+			throw new ObjectNotFoundException("Usuário não encontrado.");
+		}
+	}
 }

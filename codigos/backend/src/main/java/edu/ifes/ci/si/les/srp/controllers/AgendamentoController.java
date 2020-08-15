@@ -16,89 +16,75 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifes.ci.si.les.srp.config.CustomUser;
-import edu.ifes.ci.si.les.srp.model.Conta;
-import edu.ifes.ci.si.les.srp.model.Usuario;
-import edu.ifes.ci.si.les.srp.services.ContaService;
-import edu.ifes.ci.si.les.srp.services.exceptions.BusinessRuleException;
+import edu.ifes.ci.si.les.srp.model.Agendamento;
+import edu.ifes.ci.si.les.srp.model.CartaoInteligente;
+import edu.ifes.ci.si.les.srp.model.CartaoInteligentePK;
+import edu.ifes.ci.si.les.srp.model.Empresa;
+import edu.ifes.ci.si.les.srp.services.AgendamentoService;
 import edu.ifes.ci.si.les.srp.services.exceptions.ConstraintException;
 import edu.ifes.ci.si.les.srp.utils.CustomAuthorityUtils;
 
 @RestController
-@RequestMapping(value = "/contas")
-public class ContaController {
+@RequestMapping(value = "/agendamentos")
+public class AgendamentoController {
 	
 	@Autowired
-	private ContaService service;
+	private AgendamentoService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<List<Conta>> findAll() {
-		List<Conta> list = service.findAll();
+	public ResponseEntity<List<Agendamento>> findAll() {
+		List<Agendamento> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<Conta> find(@PathVariable Integer id) {
-		Conta obj = service.findById(id);
+	public ResponseEntity<Agendamento> find(@PathVariable Integer id) {
+		Agendamento obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Conta> insert(@Valid @RequestBody Conta obj, BindingResult br,
+	public ResponseEntity<Agendamento> insert(@Valid @RequestBody Agendamento obj, BindingResult br,
 			@AuthenticationPrincipal CustomUser userDetails) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-		Integer contaUserId = obj.getCliente().getId();
 		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (contaUserId != userDetails.getId())
-				throw new BusinessRuleException("A conta deve pertencer ao usuário.");
-		}
-		obj = service.insert(obj);
+		obj = service.insert(obj, userDetails.getId(), isAdmin);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Conta> update(@Valid @RequestBody Conta obj, BindingResult br,
+	public ResponseEntity<Agendamento> update(@RequestBody Agendamento obj, BindingResult br,
 			@AuthenticationPrincipal CustomUser userDetails) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-		Integer contaUserId = obj.getCliente().getId();
 		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (contaUserId != userDetails.getId())
-				throw new BusinessRuleException("A conta deve pertencer ao usuário.");
-		}
-		obj = service.update(obj);
+		obj = service.update(obj, userDetails.getId(), isAdmin);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id, @AuthenticationPrincipal CustomUser userDetails) {
-		Conta conta = service.findById(id);
-		Integer contaUserId = conta.getCliente().getId();
 		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (contaUserId != userDetails.getId())
-				throw new BusinessRuleException("A conta deve pertencer ao usuário.");
-		}
-		service.delete(id);
+		
+		service.delete(id, userDetails.getId(), isAdmin);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value = "/findByCliente/{idCliente}", method = RequestMethod.GET)
-	public ResponseEntity<List<Conta>> findByCliente(@PathVariable Integer idCliente,
+	@RequestMapping(value = "/findByCartao/{empresa}/{numero}", method = RequestMethod.GET)
+	public ResponseEntity<List<Agendamento>> findByCartao(@PathVariable Integer empresa, @PathVariable String numero,
 			@AuthenticationPrincipal CustomUser userDetails) {
+		Empresa empresaObj = new Empresa();
+		empresaObj.setId(empresa);
+		CartaoInteligentePK id = new CartaoInteligentePK(numero, empresaObj);
+		CartaoInteligente ci = new CartaoInteligente();
+		ci.setId(id);
+		
 		Boolean isAdmin = CustomAuthorityUtils.isAdmin(userDetails);
-		if (!isAdmin) {
-			if (idCliente != userDetails.getId())
-				throw new BusinessRuleException("Esse recurso não pode ser acessado.");
-		}
-
-		Usuario cliente = new Usuario();
-		cliente.setId(idCliente);
-		List<Conta> list = service.findByCliente(cliente);
+		
+		List<Agendamento> list = service.findByCartaoInteligente(ci, userDetails.getId(), isAdmin);
 		return ResponseEntity.ok().body(list);
 	}
 

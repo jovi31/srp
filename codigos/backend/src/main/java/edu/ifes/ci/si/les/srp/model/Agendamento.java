@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -38,24 +39,24 @@ public class Agendamento implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Min(value = 1, message = "O valor do agendamento deve ser maior que 0")
-	@Max(value = 200, message = "O valor do agendamento não pode ultrapassar R$ 200,00")
-	@NotNull(message = "O valor do agendamento deve ser preenchido")
-	@Digits(integer = 3, fraction = 2, message = "O valor do agendamento deve ser preenchido com dígitos")
+	@Min(value = 1, message = "O valor do agendamento deve ser maior ou igual a R$ 1,00.")
+	@Max(value = 200, message = "O valor do agendamento não pode ultrapassar R$ 200,00.")
+	@NotNull(message = "O valor do agendamento deve ser preenchido.")
+	@Digits(integer = 3, fraction = 2, message = "O valor do agendamento deve ser preenchido com dígitos.")
 	private Float valor;
 
-	@NotNull
+	@NotNull(message = "Data de início do agendamento não informada.")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	// @FutureOrPresent
 	private Date dataInicio;
 
-	@Min(value = 1)
-	@Max(value = 17)
-	@NotNull(message = "Período não informado")
+	@Min(value = 1, message = "O valor do período não pode ser menor que 1.")
+	@Max(value = 17, message = "O valor do período não pode ser maior que 17.")
+	@NotNull(message = "Período não informado.")
 	private Integer periodo;
 
 	@Enumerated(EnumType.ORDINAL)
-	@NotNull
+	@NotNull(message = "Tipo de período do agendamento não informado.")
 	private TipoPeriodo tipoPeriodo;
 
 	@ManyToOne
@@ -64,10 +65,12 @@ public class Agendamento implements Serializable {
 			@JoinColumn(name = "empresa_id", referencedColumnName = "empresa_id")
 	})
 	// @JoinColumn(name = "ci_numero")
-	@NotNull(message = "Cartão inteligente não informado")
+	@NotNull(message = "Cartão inteligente não informado.")
 	private CartaoInteligente cartaoInteligente;
 
+	@Valid
 	@Embedded
+	@NotNull(message = "Cartão de crédito não informado.")
 	private CartaoCredito cartaoCredito;
 
 }

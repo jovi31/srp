@@ -31,7 +31,7 @@ public class CartaoCredito implements Serializable {
 	@EqualsAndHashCode.Include
 	@Min(value = 0)
 	@Max(value = 5)
-	@NotNull(message = "Bandeira do cartão não informada")
+	@NotNull(message = "Bandeira do cartão não informada ou inválida")
 	private Integer bandeira;
 
 	@Column(length = 30)
