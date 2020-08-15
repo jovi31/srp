@@ -21,6 +21,7 @@
 <script>
 import service from '../services/conta'
 import { showError } from '../global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TabelaContas',
@@ -53,9 +54,12 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   mounted () {
-    this.cliente = { id: 2 }
-    this.loadContas()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadContas()
+    }
   }
 }
 </script>

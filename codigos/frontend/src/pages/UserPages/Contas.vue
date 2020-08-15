@@ -43,6 +43,7 @@
 <script>
 import service from '../../services/conta'
 import { showError, showSuccess } from '../../global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Contas',
@@ -99,9 +100,12 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   mounted () {
-    this.cliente = { id: 2 } // Teste
-    this.loadContas()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadContas()
+    }
   }
 }
 </script>

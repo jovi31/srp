@@ -9,7 +9,7 @@
               type="email"
               outlined
               dense
-              v-model="email"
+              v-model="user.email"
               label="E-mail"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -22,7 +22,7 @@
               type="password"
               outlined
               dense
-              v-model="senha"
+              v-model="user.senha"
               label="Senha"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -46,6 +46,9 @@
 </template>
 
 <script>
+import { signIn } from '../services/auth'
+import { setAuthorizationHeader, showNotification, showSuccess } from '../global'
+
 import FormCard from '../components/FormCard'
 
 export default {
@@ -53,19 +56,38 @@ export default {
   components: { FormCard },
   data () {
     return {
-      email: '',
-      senha: ''
+      user: {
+        email: '',
+        senha: ''
+      }
     }
   },
   methods: {
     onSubmit () {
-      let path = '/'
+      const userCredentials = { ...this.user }
+      setAuthorizationHeader(userCredentials)
 
-      if (this.email === 'admin@mail.com') {
-        path = '/admin'
-      }
+      signIn()
+        .then(res => {
+          const userData = res.data
+          this.$store.commit('setUser', userData)
 
-      this.$router.push({ path: path })
+          if (userData.admin) {
+            this.$router.push({ path: '/admin' })
+          } else {
+            this.$router.push({ path: '/' })
+          }
+
+          showSuccess('Usuário logado com sucesso!')
+        })
+        .catch(() => {
+          showNotification('default-error', 'Falha na autenticação.')
+          this.reset()
+        })
+    },
+    reset () {
+      this.user.email = ''
+      this.user.senha = ''
     }
   }
 }

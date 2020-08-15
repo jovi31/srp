@@ -81,6 +81,7 @@
 <script>
 import service from '../../services/conta'
 import { showError, showSuccess } from '../../global'
+import { mapState } from 'vuex'
 
 import FormCard from '../../components/FormCard'
 
@@ -135,12 +136,15 @@ export default {
       this.update = false
     }
   },
+  computed: mapState(['user']),
   mounted () {
     if (this.contaInicial) {
       this.update = true
       this.conta = this.contaInicial
     }
-    this.conta.cliente = { id: 2 }
+    if (this.user) {
+      this.conta.cliente = { id: this.user.id }
+    }
   }
 }
 </script>

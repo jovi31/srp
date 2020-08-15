@@ -19,6 +19,7 @@
 <script>
 import service from '../../services/recarga'
 import { showError } from 'src/global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Recargas',
@@ -49,9 +50,12 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   mounted () {
-    this.cliente = { id: 2 }
-    this.loadRecargas()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadRecargas()
+    }
   }
 }
 </script>

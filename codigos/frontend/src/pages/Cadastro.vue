@@ -9,7 +9,7 @@
                 <q-input
                   class="col-12"
                   outlined dense
-                  v-model="nome"
+                  v-model="registerForm.nome"
                   label="Nome"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -20,7 +20,7 @@
                 <q-input
                   class="col-12"
                   outlined dense
-                  v-model="cpf"
+                  v-model="registerForm.cpf"
                   label="CPF"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -31,7 +31,7 @@
                 <q-input
                   class="col-5 q-pr-sm"
                   outlined dense
-                  v-model="ddd"
+                  v-model="registerForm.ddd"
                   label="DDD"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -41,7 +41,7 @@
                   class="col-7"
                   type="tel"
                   outlined dense
-                  v-model="telefone"
+                  v-model="registerForm.telefone"
                   label="Telefone"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -57,7 +57,7 @@
                   class="col-12"
                   type="email"
                   outlined dense
-                  v-model="email"
+                  v-model="registerForm.email"
                   label="E-mail"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -69,7 +69,7 @@
                   class="col-12"
                   type="email"
                   outlined dense
-                  v-model="email2"
+                  v-model="registerForm.email2"
                   label="Confirmar E-mail"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -81,7 +81,7 @@
                   class="col-12"
                   type="password"
                   outlined dense
-                  v-model="senha"
+                  v-model="registerForm.senha"
                   label="Senha"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -93,7 +93,7 @@
                   class="col-12"
                   type="password"
                   outlined dense
-                  v-model="senha2"
+                  v-model="registerForm.senha2"
                   label="Confirmar Senha"
                   lazy-rules
                   :rules="[ val => val && val.length > 0 || 'Campo obrigatório']"
@@ -119,6 +119,9 @@
 </template>
 
 <script>
+import { signUp } from '../services/auth'
+import { showError, showSuccess, showNotification } from '../global'
+
 import FormCard from '../components/FormCard'
 
 export default {
@@ -126,19 +129,54 @@ export default {
   components: { FormCard },
   data () {
     return {
-      nome: '',
-      cpf: '',
-      ddd: '',
-      telefone: '',
-      email: '',
-      email2: '',
-      senha: '',
-      senha2: ''
+      registerForm: {
+        nome: '',
+        cpf: '',
+        ddd: '',
+        telefone: '',
+        email: '',
+        email2: '',
+        senha: '',
+        senha2: ''
+      }
     }
   },
   methods: {
     onSubmit () {
-      this.$router.push({ path: '/auth' })
+      if (this.registerForm.email !== this.registerForm.email2) {
+        showNotification('default-error', 'Os endereços de email não são iguais.')
+        return
+      }
+
+      if (this.registerForm.senha !== this.registerForm.senha2) {
+        showNotification('default-error', 'As senhas informadas não são iguais.')
+        return
+      }
+
+      const user = { ...this.registerForm }
+      user.admin = false
+      delete user.senha2
+      delete user.email2
+
+      signUp(user)
+        .then(res => {
+          showSuccess('Usuário registrado com sucesso!')
+          this.$router.push({ path: '/auth' })
+        })
+        .catch(e => {
+          showError(e)
+          this.reset()
+        })
+    },
+    reset () {
+      this.registerForm.nome = ''
+      this.registerForm.cpf = ''
+      this.registerForm.ddd = ''
+      this.registerForm.telefone = ''
+      this.registerForm.email = ''
+      this.registerForm.email2 = ''
+      this.registerForm.senha = ''
+      this.registerForm.senha2 = ''
     }
   }
 }

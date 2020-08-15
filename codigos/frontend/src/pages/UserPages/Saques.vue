@@ -19,6 +19,7 @@
 <script>
 import service from '../../services/saque'
 import { showError } from '../../global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Saques',
@@ -56,9 +57,12 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   mounted () {
-    this.cliente = { id: 2 }
-    this.loadSaques()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadSaques()
+    }
   }
 }
 </script>

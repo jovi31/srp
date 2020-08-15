@@ -47,6 +47,7 @@
 <script>
 import service from '../../services/cartao'
 import { showError, showSuccess } from '../../global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Cartoes',
@@ -108,9 +109,12 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   mounted () {
-    this.cliente = { id: 2 } // Teste
-    this.loadCartoes()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadCartoes()
+    }
   }
 }
 </script>

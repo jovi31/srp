@@ -50,9 +50,10 @@
 <script>
 import cartaoService from '../../services/cartao'
 import empresaService from '../../services/empresa'
+import { showError, showSuccess } from '../../global'
+import { mapState } from 'vuex'
 
 import FormCard from '../../components/FormCard'
-import { showError, showSuccess } from '../../global'
 
 export default {
   name: 'CadastroCartao',
@@ -112,13 +113,16 @@ export default {
       this.update = false
     }
   },
+  computed: mapState(['user']),
   mounted () {
     this.loadEmpresas()
     if (this.cartaoInicial) {
       this.update = true
       this.cartao = this.cartaoInicial
     }
-    this.cartao.cliente = { id: 2 } // Teste
+    if (this.user) {
+      this.cartao.cliente = { id: this.user.id }
+    }
   }
 }
 </script>

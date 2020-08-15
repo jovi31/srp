@@ -22,7 +22,16 @@ export default function (/* { ssrContext } */) {
 
     // enable strict mode (adds overhead!)
     // for dev mode only
-    strict: process.env.DEV
+    strict: process.env.DEV,
+
+    state: {
+      user: null
+    },
+    mutations: {
+      setUser (state, user) {
+        state.user = user
+      }
+    }
   })
 
   return Store

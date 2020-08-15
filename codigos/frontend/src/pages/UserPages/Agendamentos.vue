@@ -79,6 +79,7 @@
 import agendamentoService from '../../services/agendamento'
 import cartaoService from '../../services/cartao'
 import { showError, showSuccess } from '../../global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Agendamentos',
@@ -149,14 +150,17 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   watch: {
     cartao () {
       this.loadAgendamentos()
     }
   },
   mounted () {
-    this.cliente = { id: 2 }
-    this.loadCartoes()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadCartoes()
+    }
   }
 }
 </script>

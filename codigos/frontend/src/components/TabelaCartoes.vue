@@ -21,6 +21,7 @@
 <script>
 import service from '../services/cartao'
 import showError from '../global'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TabelaCartoes',
@@ -70,9 +71,12 @@ export default {
         .catch(showError)
     }
   },
+  computed: mapState(['user']),
   mounted () {
-    this.cliente = { id: 2 }
-    this.loadCartoes()
+    if (this.user) {
+      this.cliente = { id: this.user.id }
+      this.loadCartoes()
+    }
   }
 }
 </script>
