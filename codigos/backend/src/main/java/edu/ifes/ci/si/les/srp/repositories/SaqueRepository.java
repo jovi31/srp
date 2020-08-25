@@ -17,7 +17,7 @@ public interface SaqueRepository extends JpaRepository<Saque, Integer> {
 	public Integer qtdSaquesPendentes(Integer empresaId, String ciNumero);
 	
 	@Transactional
-	@Query(value = "SELECT * FROM SAQUE WHERE data >= ?1 AND data <= ?2", nativeQuery = true)
+	@Query(value = "SELECT * FROM SAQUE WHERE data >= CAST(?1 AS TIMESTAMP) AND data <= CAST(?2 AS TIMESTAMP)", nativeQuery = true)
 	public List<Saque> findSaquesBetweenTimestamps(String timestamp1, String timestamp2);
 	
 	@Transactional
@@ -25,11 +25,11 @@ public interface SaqueRepository extends JpaRepository<Saque, Integer> {
 	public List<Saque> findByCliente(Integer clienteId);
 	
 	@Transactional
-	@Query(value = "SELECT e.id AS empresa_id, e.nome AS empresa, SUM(s.valor) AS total, COUNT(s.id) AS quantidade FROM SAQUE s RIGHT OUTER JOIN EMPRESA e ON s.empresa_id = e.id AND s.data >= ?1 AND s.data <= ?2 GROUP BY e.id", nativeQuery = true)
+	@Query(value = "SELECT e.id AS empresa_id, e.nome AS empresa, SUM(s.valor) AS total, COUNT(s.id) AS quantidade FROM SAQUE s RIGHT OUTER JOIN EMPRESA e ON s.empresa_id = e.id AND s.data >= CAST(?1 AS TIMESTAMP) AND s.data <= CAST(?2 AS TIMESTAMP) GROUP BY e.id", nativeQuery = true)
 	public List<?> findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo(String inicio, String termino);
 	
 	@Transactional
-	@Query(value = "SELECT s.id, s.data, s.status, s.valor, s.empresa_id, s.ci_numero AS cartao, s.conta_id AS conta FROM CARTAO_INTELIGENTE ci INNER JOIN SAQUE s ON ci.empresa_id = s.empresa_id AND ci.ci_numero = s.ci_numero WHERE ci.cliente_id = ?1 AND s.data >= ?2 AND s.data <= ?3", nativeQuery = true)
+	@Query(value = "SELECT s.id, s.data, s.status, s.valor, s.empresa_id, s.ci_numero AS cartao, s.conta_id AS conta FROM CARTAO_INTELIGENTE ci INNER JOIN SAQUE s ON ci.empresa_id = s.empresa_id AND ci.ci_numero = s.ci_numero WHERE ci.cliente_id = ?1 AND s.data >= CAST(?2 AS TIMESTAMP) AND s.data <= CAST(?3 AS TIMESTAMP)", nativeQuery = true)
 	public List<?> findSaquesByClienteAndPeriodo(Integer cliente, String inicio, String termino);
 
 }

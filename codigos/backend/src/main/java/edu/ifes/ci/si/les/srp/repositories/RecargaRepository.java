@@ -25,11 +25,11 @@ public interface RecargaRepository extends JpaRepository<Recarga, Integer> {
 	public Float somaRecargasPendentes(Integer empresaId, String ciNumero);
 	
 	@Transactional
-	@Query(value = "SELECT e.id AS empresa_id, e.nome AS empresa, SUM(r.valor) AS total, COUNT(r.id) AS quantidade FROM RECARGA r RIGHT OUTER JOIN EMPRESA e ON r.empresa_id = e.id AND r.data >= ?1 AND r.data <= ?2 GROUP BY e.id", nativeQuery = true)
+	@Query(value = "SELECT e.id AS empresa_id, e.nome AS empresa, SUM(r.valor) AS total, COUNT(r.id) AS quantidade FROM RECARGA r RIGHT OUTER JOIN EMPRESA e ON r.empresa_id = e.id AND r.data >= CAST(?1 AS TIMESTAMP) AND r.data <= CAST(?2 AS TIMESTAMP) GROUP BY e.id", nativeQuery = true)
 	public List<?> findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo(String inicio, String termino);
 	
 	@Transactional
-	@Query(value = "SELECT r.id, r.data, r.status, r.valor, r.empresa_id, r.ci_numero AS cartao FROM CARTAO_INTELIGENTE ci INNER JOIN RECARGA r ON ci.empresa_id = r.empresa_id AND ci.ci_numero = r.ci_numero WHERE ci.cliente_id = ?1 AND r.data >= ?2 AND r.data <= ?3", nativeQuery = true)
+	@Query(value = "SELECT r.id, r.data, r.status, r.valor, r.empresa_id, r.ci_numero AS cartao FROM CARTAO_INTELIGENTE ci INNER JOIN RECARGA r ON ci.empresa_id = r.empresa_id AND ci.ci_numero = r.ci_numero WHERE ci.cliente_id = ?1 AND r.data >= CAST(?2 AS TIMESTAMP) AND r.data <= CAST(?3 AS TIMESTAMP)", nativeQuery = true)
 	public List<?> findRecargasByClienteAndPeriodo(Integer cliente, String inicio, String termino);
 	
 }

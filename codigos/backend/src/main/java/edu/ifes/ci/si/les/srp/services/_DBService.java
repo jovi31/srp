@@ -78,49 +78,58 @@ public class _DBService {
 				"333333333", "usuario02@mail.com", passwordEncoder.encode("12345678"), false);
 		
 		CartaoInteligentePK pk1 = new CartaoInteligentePK("00000000001", empresa1);
-		CartaoInteligente cartaoInteligente1 = new CartaoInteligente(pk1, "Cartão01", (float) 25, cliente1);
+		CartaoInteligente cartaoInteligente1 = new CartaoInteligente(pk1, "Cartão01", (float) 0, cliente1);
 		
 		CartaoInteligentePK pk2 = new CartaoInteligentePK("00000000002", empresa1);
-		CartaoInteligente cartaoInteligente2 = new CartaoInteligente(pk2, "Cartão01", (float) 20, cliente2);
+		CartaoInteligente cartaoInteligente2 = new CartaoInteligente(pk2, "Cartão01", (float) 40, cliente2);
 		
 		CartaoInteligentePK pk3 = new CartaoInteligentePK("00000000001", empresa2);
-		CartaoInteligente cartaoInteligente3 = new CartaoInteligente(pk3, "Cartão02", (float) 0, cliente2);
+		CartaoInteligente cartaoInteligente3 = new CartaoInteligente(pk3, "Cartão02", (float) 40, cliente2);
 		
 		CartaoInteligentePK pk4 = new CartaoInteligentePK("00000000002", empresa2);
 		CartaoInteligente cartaoInteligente4 = new CartaoInteligente(pk4, "Cartão03", (float) 100, cliente2);
 		
 		Conta conta1 = new Conta(null, "Usuario01", "22222222222", "001", "0001", 
 				"123456789", TipoConta.CORRENTE, cliente1);
+		Conta conta2 = new Conta(null, "Usuario02", "33333333333", "002", "0002", 
+				"123456789", TipoConta.POUPANCA, cliente2);
 		
 		CartaoCredito cartaoCredito1 = new CartaoCredito(0, "USUARIO01", "1111111111111", "06", 2023, "001");
 		CartaoCredito cartaoCredito2 = new CartaoCredito(0, "USUARIO02", "2222222222222", "12", 2023, "002");
 		CartaoCredito cartaoCredito3 = new CartaoCredito(0, "USUARIO02", "3333333333333", "03", 2022, "003");
 		
-		Recarga recarga1 = new Recarga(null, sdf.parse("2020-05-10"), Status.EFETIVADO, 
+		Recarga recarga1 = new Recarga(null, sdf.parse("2020-07-20"), Status.EFETIVADO, 
 				(float) 20, cartaoInteligente1, cartaoCredito1);
-		Recarga recarga2 = new Recarga(null, sdf.parse("2020-06-10"), Status.EFETIVADO, 
+		Recarga recarga2 = new Recarga(null, sdf.parse("2020-08-20"), Status.EFETIVADO, 
 				(float) 25, cartaoInteligente1, cartaoCredito1);
-		Recarga recarga3 = new Recarga(null, sdf.parse("2020-05-17"), Status.EFETIVADO, 
+		Recarga recarga3 = new Recarga(null, sdf.parse("2020-07-10"), Status.EFETIVADO, 
 				(float) 20, cartaoInteligente2, cartaoCredito2);
-		Recarga recarga4 = new Recarga(null, sdf.parse("2020-06-17"), Status.PENDENTE, 
-				(float) 40, cartaoInteligente3, cartaoCredito3);
+		Recarga recarga4 = new Recarga(null, sdf.parse("2020-08-10"), Status.EFETIVADO, 
+				(float) 30, cartaoInteligente2, cartaoCredito3);
+		Recarga recarga5 = new Recarga(null, sdf.parse("2020-08-11"), Status.EFETIVADO, 
+				(float) 20, cartaoInteligente3, cartaoCredito3);
+		Recarga recarga6 = new Recarga(null, sdf.parse("2020-08-25"), Status.EFETIVADO, 
+				(float) 20, cartaoInteligente3, cartaoCredito3);
+		Recarga recarga7 = new Recarga(null, sdf.parse("2020-08-25"), Status.EFETIVADO, 
+				(float) 100, cartaoInteligente4, cartaoCredito2);
 		
-		Agendamento agendamento1 = new Agendamento(null, (float) 20, sdf.parse("2020-06-17"), 1, TipoPeriodo.MENSAL, 
+		Agendamento agendamento1 = new Agendamento(null, (float) 25, sdf.parse("2020-07-20"), 1, TipoPeriodo.MENSAL, 
 				cartaoInteligente1, cartaoCredito1);
-		Agendamento agendamento2 = new Agendamento(null, (float) 10, sdf.parse("2020-06-17"), 2, TipoPeriodo.SEMANAL, 
-				cartaoInteligente3, cartaoCredito2);
+		Agendamento agendamento2 = new Agendamento(null, (float) 20, sdf.parse("2020-07-28"), 2, TipoPeriodo.SEMANAL, 
+				cartaoInteligente3, cartaoCredito3);
 		
-		Saque saque1 = new Saque(null, sdf.parse("2020-05-12"), Status.EFETIVADO, (float) 20, conta1, cartaoInteligente1);
-		Saque saque2 = new Saque(null, sdf.parse("2020-06-17"), Status.PENDENTE, (float) 25, conta1, cartaoInteligente1);
+		Saque saque1 = new Saque(null, sdf.parse("2020-07-28"), Status.EFETIVADO, (float) 20, conta1, cartaoInteligente1);
+		Saque saque2 = new Saque(null, sdf.parse("2020-08-24"), Status.EFETIVADO, (float) 25, conta1, cartaoInteligente1);
+		Saque saque3 = new Saque(null, sdf.parse("2020-08-12"), Status.EFETIVADO, (float) 10, conta2, cartaoInteligente2);
 		
 		ufRepository.saveAll(Arrays.asList(uf1, uf2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2));
 		empresaRepository.saveAll(Arrays.asList(empresa1, empresa2, empresa3, empresa4));
 		usuarioRepository.saveAll(Arrays.asList(administrador, cliente1, cliente2));
 		cartaoInteligenteRepository.saveAll(Arrays.asList(cartaoInteligente1, cartaoInteligente2, cartaoInteligente3, cartaoInteligente4));
-		contaRepository.save(conta1);
-		recargaRepository.saveAll(Arrays.asList(recarga1, recarga2, recarga3, recarga4));
+		contaRepository.saveAll(Arrays.asList(conta1, conta2));
+		recargaRepository.saveAll(Arrays.asList(recarga1, recarga2, recarga3, recarga4, recarga5, recarga6, recarga7));
 		agendamentoRepository.saveAll(Arrays.asList(agendamento1, agendamento2));
-		saqueRepository.saveAll(Arrays.asList(saque1, saque2));
+		saqueRepository.saveAll(Arrays.asList(saque1, saque2, saque3));
 	}
 }

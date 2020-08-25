@@ -13,7 +13,7 @@ import edu.ifes.ci.si.les.srp.model.Empresa;
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 	
 	@Transactional
-	@Query(value = "SELECT c.id AS cidade_id, c.nome AS cidade, COUNT(ec.empresa_id) AS quantidade FROM  CIDADE c  LEFT OUTER JOIN  EMPRESA_CIDADE ec ON c.id = ec.cidade_id WHERE c.uf_sigla = ?1 GROUP BY c.id", nativeQuery = true)
+	@Query(value = "SELECT c.id AS cidade_id, c.nome AS cidade, COUNT(ec.empresa_id) AS quantidade FROM  CIDADE c LEFT OUTER JOIN  EMPRESA_CIDADE ec ON c.id = ec.cidade_id WHERE c.uf_sigla = ?1 GROUP BY c.id", nativeQuery = true)
 	public List<?> findQuantidadesEmpresasOfCidadesByUf(String siglaUf);
 	
 }
