@@ -55,34 +55,24 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 export default {
   name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
+  components: { EssentialLink },
   data () {
     return {
       leftDrawerOpen: false,
       links: {
         cruds: [
-          {
-            title: 'Usuário',
-            link: '/admin/cadastroUsuario'
-          },
-          {
-            title: 'Empresa',
-            link: '/admin/cadastroEmpresa'
-          },
-          {
-            title: 'Cidade',
-            link: '/admin/cadastroCidade'
-          },
-          {
-            title: 'UF',
-            link: '/admin/cadastroUf'
-          }
+          { title: 'Usuário', link: '/admin/cadastroUsuario' },
+          { title: 'Empresa', link: '/admin/cadastroEmpresa' },
+          { title: 'Cidade', link: '/admin/cadastroCidade' },
+          { title: 'UF', link: '/admin/cadastroUf' }
         ],
-        relatorios: [],
+        relatorios: [
+          { title: 'Recargas nas Empresas', link: '/admin/relatorios/recargasEmpresas' },
+          { title: 'Saques nas Empresas', link: '/admin/relatorios/saquesEmpresas' },
+          { title: 'Empresas nas Cidades', link: '/admin/relatorios/empresasCidades' },
+          { title: 'Recargas por Cliente', link: '/admin/relatorios/recargasPorCliente' },
+          { title: 'Saques por Cliente', link: '/admin/relatorios/saquesPorCliente' }
+        ],
         logout: {
           title: 'Sair',
           icon: 'power_settings_new',

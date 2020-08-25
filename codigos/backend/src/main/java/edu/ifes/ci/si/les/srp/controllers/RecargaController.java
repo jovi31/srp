@@ -81,4 +81,17 @@ public class RecargaController {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@RequestMapping(value = "/findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo/{inicio}/{termino}", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<List<?>> findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo(@PathVariable String inicio, @PathVariable String termino) {
+		List<?> list = service.findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo(inicio, termino);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/findRecargasByClienteAndPeriodo/{cliente}/{inicio}/{termino}", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<List<?>> findRecargasByClienteAndPeriodo(@PathVariable Integer cliente, @PathVariable String inicio, @PathVariable String termino) {
+		List<?> list = service.findRecargasByClienteAndPeriodo(cliente, inicio, termino);
+		return ResponseEntity.ok().body(list);
+	}
 }

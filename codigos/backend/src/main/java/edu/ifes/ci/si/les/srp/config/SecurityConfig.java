@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				.antMatchers("/h2-console/**").permitAll()
 				.antMatchers("/usuarios", "/ufs", "/cidades")
 					.hasRole("ADMIN")
 				.antMatchers("/signUp").permitAll()
@@ -36,6 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable()
 			.sessionManagement().maximumSessions(1);
+		
+		/*
+		 * o h2 carrega páginas do site em frames
+		 * o spring security define o cabeçalho X-Frame-Options como DENY por padrão
+		 * é preciso setar o cabeçalho como SAMEORIGIN para as páginas do mesmo site serem carregadas em frames
+		 */
+		http.headers().frameOptions().sameOrigin();
 	}
 
 	@Override

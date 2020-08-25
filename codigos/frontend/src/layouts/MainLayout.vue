@@ -49,72 +49,25 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 export default {
   name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
+  components: { EssentialLink },
   data () {
     return {
       leftDrawerOpen: false,
       tabs: [
-        {
-          title: 'Recarga',
-          link: '/recarga'
-        },
-        {
-          title: 'Saque',
-          link: '/saque'
-        },
-        {
-          title: 'Agendamento',
-          link: '/agendamento'
-        },
-        {
-          title: 'Cadastrar Cartão',
-          link: '/cadastroCartao'
-        },
-        {
-          title: 'Cadastrar Conta',
-          link: '/cadastroConta'
-        }
+        { title: 'Recarga', link: '/recarga' },
+        { title: 'Saque', link: '/saque' },
+        { title: 'Agendamento', link: '/agendamento' },
+        { title: 'Cadastrar Cartão', link: '/cadastroCartao' },
+        { title: 'Cadastrar Conta', link: '/cadastroConta' }
       ],
       essentialLinks: [
-        {
-          title: 'Recargas',
-          icon: 'monetization_on',
-          link: '/recargas'
-        },
-        {
-          title: 'Saques',
-          icon: 'fas fa-hand-holding-usd',
-          link: '/saques'
-        },
-        {
-          title: 'Agendamentos',
-          icon: 'calendar_today',
-          link: '/agendamentos'
-        },
-        {
-          title: 'Cartões',
-          icon: 'credit_card',
-          link: '/cartoes'
-        },
-        {
-          title: 'Contas',
-          icon: 'fas fa-piggy-bank',
-          link: '/contas'
-        },
-        {
-          title: 'FAQ',
-          icon: 'help',
-          link: '/faq'
-        },
-        {
-          title: 'Sair',
-          icon: 'power_settings_new',
-          link: '/auth'
-        }
+        { title: 'Recargas', icon: 'monetization_on', link: '/recargas' },
+        { title: 'Saques', icon: 'fas fa-hand-holding-usd', link: '/saques' },
+        { title: 'Agendamentos', icon: 'calendar_today', link: '/agendamentos' },
+        { title: 'Cartões', icon: 'credit_card', link: '/cartoes' },
+        { title: 'Contas', icon: 'fas fa-piggy-bank', link: '/contas' },
+        { title: 'FAQ', icon: 'help', link: '/faq' },
+        { title: 'Sair', icon: 'power_settings_new', link: '/auth' }
       ]
     }
   }

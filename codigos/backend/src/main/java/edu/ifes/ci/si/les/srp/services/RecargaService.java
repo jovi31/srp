@@ -127,4 +127,12 @@ public class RecargaService {
 		return repository.findByCliente(clienteId);
 	}
 	
+	public List<?> findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo(String inicio, String termino) {
+		return repository.findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo(inicio, termino);
+	}
+	
+	public List<?> findRecargasByClienteAndPeriodo(Integer cliente, String inicio, String termino) {
+		return repository.findRecargasByClienteAndPeriodo(cliente, inicio, termino);
+	}
+	
 }

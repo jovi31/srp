@@ -24,4 +24,12 @@ public interface RecargaRepository extends JpaRepository<Recarga, Integer> {
 	@Query(value = "SELECT SUM(valor) FROM RECARGA WHERE empresa_id = ?1 AND ci_numero = ?2 AND status = 0", nativeQuery = true)
 	public Float somaRecargasPendentes(Integer empresaId, String ciNumero);
 	
+	@Transactional
+	@Query(value = "SELECT e.id AS empresa_id, e.nome AS empresa, SUM(r.valor) AS total, COUNT(r.id) AS quantidade FROM RECARGA r RIGHT OUTER JOIN EMPRESA e ON r.empresa_id = e.id AND r.data >= ?1 AND r.data <= ?2 GROUP BY e.id", nativeQuery = true)
+	public List<?> findTotaisAndQuantidadesRecargasOfEmpresasByPeriodo(String inicio, String termino);
+	
+	@Transactional
+	@Query(value = "SELECT r.id, r.data, r.status, r.valor, r.empresa_id, r.ci_numero AS cartao FROM CARTAO_INTELIGENTE ci INNER JOIN RECARGA r ON ci.empresa_id = r.empresa_id AND ci.ci_numero = r.ci_numero WHERE ci.cliente_id = ?1 AND r.data >= ?2 AND r.data <= ?3", nativeQuery = true)
+	public List<?> findRecargasByClienteAndPeriodo(Integer cliente, String inicio, String termino);
+	
 }

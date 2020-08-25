@@ -86,6 +86,9 @@ public class _DBService {
 		CartaoInteligentePK pk3 = new CartaoInteligentePK("00000000001", empresa2);
 		CartaoInteligente cartaoInteligente3 = new CartaoInteligente(pk3, "Cartão02", (float) 0, cliente2);
 		
+		CartaoInteligentePK pk4 = new CartaoInteligentePK("00000000002", empresa2);
+		CartaoInteligente cartaoInteligente4 = new CartaoInteligente(pk4, "Cartão03", (float) 100, cliente2);
+		
 		Conta conta1 = new Conta(null, "Usuario01", "22222222222", "001", "0001", 
 				"123456789", TipoConta.CORRENTE, cliente1);
 		
@@ -114,7 +117,7 @@ public class _DBService {
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2));
 		empresaRepository.saveAll(Arrays.asList(empresa1, empresa2, empresa3, empresa4));
 		usuarioRepository.saveAll(Arrays.asList(administrador, cliente1, cliente2));
-		cartaoInteligenteRepository.saveAll(Arrays.asList(cartaoInteligente1, cartaoInteligente2, cartaoInteligente3));
+		cartaoInteligenteRepository.saveAll(Arrays.asList(cartaoInteligente1, cartaoInteligente2, cartaoInteligente3, cartaoInteligente4));
 		contaRepository.save(conta1);
 		recargaRepository.saveAll(Arrays.asList(recarga1, recarga2, recarga3, recarga4));
 		agendamentoRepository.saveAll(Arrays.asList(agendamento1, agendamento2));

@@ -120,4 +120,12 @@ public class SaqueService {
 		return repository.findByCliente(clienteId);
 	}
 	
+	public List<?> findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo(String inicio, String termino) {
+		return repository.findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo(inicio, termino);
+	}
+	
+	public List<?> findSaquesByClienteAndPeriodo(Integer cliente, String inicio, String termino) {
+		return repository.findSaquesByClienteAndPeriodo(cliente, inicio, termino);
+	}
+	
 }

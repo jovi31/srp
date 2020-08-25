@@ -23,5 +23,13 @@ public interface SaqueRepository extends JpaRepository<Saque, Integer> {
 	@Transactional
 	@Query(value = "SELECT (s.*) FROM CARTAO_INTELIGENTE c, SAQUE s WHERE c.cliente_id = ?1 AND c.ci_numero = s.ci_numero AND c.empresa_id = s.empresa_id", nativeQuery = true)
 	public List<Saque> findByCliente(Integer clienteId);
+	
+	@Transactional
+	@Query(value = "SELECT e.id AS empresa_id, e.nome AS empresa, SUM(s.valor) AS total, COUNT(s.id) AS quantidade FROM SAQUE s RIGHT OUTER JOIN EMPRESA e ON s.empresa_id = e.id AND s.data >= ?1 AND s.data <= ?2 GROUP BY e.id", nativeQuery = true)
+	public List<?> findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo(String inicio, String termino);
+	
+	@Transactional
+	@Query(value = "SELECT s.id, s.data, s.status, s.valor, s.empresa_id, s.ci_numero AS cartao, s.conta_id AS conta FROM CARTAO_INTELIGENTE ci INNER JOIN SAQUE s ON ci.empresa_id = s.empresa_id AND ci.ci_numero = s.ci_numero WHERE ci.cliente_id = ?1 AND s.data >= ?2 AND s.data <= ?3", nativeQuery = true)
+	public List<?> findSaquesByClienteAndPeriodo(Integer cliente, String inicio, String termino);
 
 }

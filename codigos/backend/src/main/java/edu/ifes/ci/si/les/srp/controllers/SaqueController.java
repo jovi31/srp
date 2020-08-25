@@ -81,4 +81,18 @@ public class SaqueController {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@RequestMapping(value = "/findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo/{inicio}/{termino}", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<List<?>> findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo(@PathVariable String inicio, @PathVariable String termino) {
+		List<?> list = service.findTotaisAndQuantidadesSaquesOfEmpresasByPeriodo(inicio, termino);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/findSaquesByClienteAndPeriodo/{cliente}/{inicio}/{termino}", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<List<?>> findSaquesByClienteAndPeriodo(@PathVariable Integer cliente, @PathVariable String inicio, @PathVariable String termino) {
+		List<?> list = service.findSaquesByClienteAndPeriodo(cliente, inicio, termino);
+		return ResponseEntity.ok().body(list);
+	}
+	
 }

@@ -63,4 +63,11 @@ public class EmpresaController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(value = "/findQuantidadesEmpresasOfCidadesByUf/{siglaUf}", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<List<?>> findQuantidadesEmpresasOfCidadesByUf(@PathVariable String siglaUf) {
+		List<?> list = service.findQuantidadesEmpresasOfCidadesByUf(siglaUf);
+		return ResponseEntity.ok().body(list);
+	}
+	
 }

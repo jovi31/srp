@@ -67,4 +67,8 @@ public class EmpresaService {
 		}
 	}
 	
+	public List<?> findQuantidadesEmpresasOfCidadesByUf(String siglaUf) {
+		return repository.findQuantidadesEmpresasOfCidadesByUf(siglaUf);
+	}
+	
 }

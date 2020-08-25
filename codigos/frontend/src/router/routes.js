@@ -21,6 +21,12 @@ import CadastroEmpresa from '../pages/AdminPages/CadastroEmpresa'
 import CadastroCidade from '../pages/AdminPages/CadastroCidade'
 import CadastroUf from '../pages/AdminPages/CadastroUF'
 
+import RecargasEmpresas from '../pages/AdminPages/Relatorios/RecargasEmpresas'
+import SaquesEmpresas from '../pages/AdminPages/Relatorios/SaquesEmpresas'
+import EmpresasCidades from '../pages/AdminPages/Relatorios/EmpresasCidades'
+import RecargasPorCliente from '../pages/AdminPages/Relatorios/RecargasPorCliente'
+import SaquesPorCliente from '../pages/AdminPages/Relatorios/SaquesPorCliente'
+
 import Login from '../pages/Login'
 import Cadastro from '../pages/Cadastro'
 
@@ -52,7 +58,13 @@ const routes = [
       { path: 'cadastroUsuario', component: CadastroUsuario },
       { path: 'cadastroEmpresa', component: CadastroEmpresa },
       { path: 'cadastroCidade', component: CadastroCidade },
-      { path: 'cadastroUf', component: CadastroUf }
+      { path: 'cadastroUf', component: CadastroUf },
+
+      { path: 'relatorios/recargasEmpresas', component: RecargasEmpresas },
+      { path: 'relatorios/saquesEmpresas', component: SaquesEmpresas },
+      { path: 'relatorios/empresasCidades', component: EmpresasCidades },
+      { path: 'relatorios/recargasPorCliente', component: RecargasPorCliente },
+      { path: 'relatorios/saquesPorCliente', component: SaquesPorCliente }
     ]
   },
 
