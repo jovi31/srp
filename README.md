@@ -14,7 +14,6 @@ Nesse sentido, a proposta do sistema apresentado nesse documento é oferecer um 
 Usuário (Cliente ou Administrador)
 Cartão inteligente
 Conta
-Método de Pagamento
 UF
 Cidade
 Empresa
@@ -31,9 +30,13 @@ Saque
 ## Relatórios
 
 ```
-Listar totais e quantidades de recargas nas Empresas (data início e data término)
-Listar totais e quantidades de recargas nas Cidades (Por UF, data início e data término)
-Listar recargas (Por cliente, data início e data término)
-Listar saques (Por cliente, data início e data término)
-Listar quantidades de Clientes (Por empresa)
+Listar totais e quantidades de Recargas nas Empresas (data início e data término)
+Listar totais e quantidades de Saques nas Empresas (data início e data término)
+Listar quantidade de Empresas nas Cidades (Por UF)
+Listar Recargas (Por cliente, data início e data término)
+Listar Saques (Por cliente, data início e data término)
 ```
+
+## Documentação da API
+
+- https://documenter.getpostman.com/view/12476534/TVCY6BYm
