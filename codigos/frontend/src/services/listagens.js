@@ -64,7 +64,7 @@ const porCliente = (clienteId, inicio, termino, baseUri) => {
   const uri = `${baseUri}/${clienteId}/${inicio}/${termino}`
   return relatorio(uri, item => {
     let data = new Date(item[1])
-    data = data.toLocaleDateString()
+    data = data.toLocaleDateString('pt-BR')
 
     const obj = {
       id: item[0],
