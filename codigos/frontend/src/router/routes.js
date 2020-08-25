@@ -14,7 +14,6 @@ import Saques from '../pages/UserPages/Saques'
 import Agendamentos from '../pages/UserPages/Agendamentos'
 import Cartoes from '../pages/UserPages/Cartoes'
 import Contas from '../pages/UserPages/Contas'
-import Faq from '../pages/UserPages/FAQ'
 
 import CadastroUsuario from '../pages/AdminPages/CadastroUsuario'
 import CadastroEmpresa from '../pages/AdminPages/CadastroEmpresa'
@@ -45,8 +44,7 @@ const routes = [
       { path: 'saques', component: Saques },
       { path: 'agendamentos', component: Agendamentos },
       { path: 'cartoes', component: Cartoes },
-      { path: 'contas', component: Contas },
-      { path: 'faq', component: Faq }
+      { path: 'contas', component: Contas }
     ]
   },
 

@@ -66,7 +66,6 @@ export default {
         { title: 'Agendamentos', icon: 'calendar_today', link: '/agendamentos' },
         { title: 'Cartões', icon: 'credit_card', link: '/cartoes' },
         { title: 'Contas', icon: 'fas fa-piggy-bank', link: '/contas' },
-        { title: 'FAQ', icon: 'help', link: '/faq' },
         { title: 'Sair', icon: 'power_settings_new', link: '/auth' }
       ]
     }
