@@ -37,7 +37,7 @@ export function formatarValor (valor) {
   if (!valor) {
     return valor
   } else if (!isNaN(valor)) {
-    const valorStr = valor.toFixed(2).replaceAll('.', ',')
+    const valorStr = valor.toFixed(2).replace('.', ',')
     return `R$ ${valorStr}`
   } else {
     throw new Error('Valor inválido')
@@ -45,7 +45,8 @@ export function formatarValor (valor) {
 }
 export function formatarData (data) {
   if (data && (typeof data === 'string')) {
-    return data.replaceAll('/', '-')
+    const dataFormatada = data.replace('/', '-').replace('/', '-')
+    return dataFormatada
   } else {
     throw new Error('Data inválida')
   }
