@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { formatarData } from '../global'
+
 export default {
   name: 'AgendamentoForm',
   data () {
@@ -65,7 +67,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      const formatedDate = this.dataInicio.replaceAll('/', '-')
+      const formatedDate = formatarData(this.dataInicio)
 
       this.$emit('submit', {
         dataInicio: formatedDate,
