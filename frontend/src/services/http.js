@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'http://localhost:8081/',
-  timeout: 3000
+  baseURL: 'https://srp-backend-spring.herokuapp.com/',
+  timeout: 6000
 })
 
 export default client
